@@ -22,7 +22,7 @@ img {
   border: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h4, h5, h6 {
   font: normal 175% 'century gothic', arial, sans-serif;
   color: #000;
   margin: 0 0 15px 0;
@@ -30,7 +30,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2 {
-  font: normal 175% 'century gothic', arial, sans-serif;
+  font: normal 150% 'century gothic', arial, sans-serif;
+color: #000;
+  margin: 0 0 15px 0;
+  padding: 15px 0 5px 0;
+}
+h3 {
+font: normal 120% 'century gothic', arial, sans-serif;
+color: #000;
+  margin: 0 0 15px 0;
+  padding: 15px 0 5px 0;
+text-decoration: underline;
 }
 
 h4, h5, h6 {

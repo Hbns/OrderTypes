@@ -37,7 +37,7 @@
             This eventualy led to the mariage of Esther Klein and George Szekeres and was there for called 
             the happy ending problem by Paul Erdos.
         </p>
-        <h2>k-gon or subset of k points</h2>
+        <h2>K-gon or subset of k points</h2>
         <p>The convex quadrilateral mentioned in the introduction can be caled a 4-gon or a k-gon where k equals 4.
             Finding k-gon's became one of the main questions of Szekeres and Erdos work mentioned above.
             <b>Is there a function of k that gives us the minimum size a point set N needs to be to guaranty the k-gon exists?</b>
@@ -48,7 +48,7 @@
         </p>
         <h2>Erdos-Szekeres Conjecture</h2>
         <p>
-          Proofs exist for the problem when using the specific values 3, 4, 5 and recently proved 6 for k. But the general form has not been proved,
+          Proofs exist for the problem when using the specific values 3, 4, 5 and more recently proved 6 for k. But the general form has not been proved,
           thus it is formulated as a conjecture, and known as the Erdos and Szekeres conjecture .
            Where for a k bigger then three the set of points N needs to be at least of size 
            <math xmlns='http://www.w3.org/1998/Math/MathML'>
@@ -56,7 +56,7 @@
              <msup>
               <mn>2</mn>
               <mrow>
-               <mi>n</mi>
+               <mi>k</mi>
                <mo>-</mo>
                 <mn>2</mn>
               </mrow>
@@ -67,14 +67,128 @@
            </math>
           .
         </p>
-        <h2>Upperbound when calculating k-gons</h2>
+        <h2>Upperbound When Calculating K-gons</h2>
         <p>
           The conjecture mentioned above uses the fact that a upperbound exists for the calculation of a subset of k points or k-gon.
           This was proven in 1935 in the original paper <cite>A combinatorial problem in geometry</cite> by Erdos and Szekeres. 
           The proof is based on <a href="https://en.wikipedia.org/wiki/Ramsey%27s_theorem" title="Ramsey's theorem">Ramsey's theorem</a>
-          for 2-colored hypergraphs. Since it was proven that such a upperbound exists multiple attemps to improve that upperbound happend over time. 
+          for 2-colored hypergraphs. Since it was proven that such a upperbound exists multiple attemps to difine it happend over time. 
         </p>
-        <h2>Improving the upperbound</h2>
+        <h2>Defining The Upperbound</h2>
+        <p>Multiple attemps to proof and define the upperbounds exist, but none of all is as small as the value proposed in the Erdos-Szekeres conjecture.<br>
+          <p style="padding: 10px; border: 2px solid red;">
+          Erdos-Szekeres Conjecture <b>Lower Bound ES(k) =  
+          <math xmlns='http://www.w3.org/1998/Math/MathML'>
+            <mrow>
+             <msup>
+              <mn>2</mn>
+              <mrow>
+               <mi>k</mi>
+               <mo>-</mo>
+                <mn>2</mn>
+              </mrow>
+             </msup>
+             <mo>+</mo>
+             <mn>1</mn>
+            </mrow>
+           </math>
+          </b>
+           <span style="float:right">Erdos-Szekeres Conjecture <b>Upper Bound ES(k) <span>&#8804;</span>
+           <math xmlns='http://www.w3.org/1998/Math/MathML'>
+            <mrow>
+              <mo> ( </mo>
+              <mfrac linethickness="0">
+                <mi> 2k - 4 </mi>
+                <mi> k - 2 </mi>
+              </mfrac>
+            <mo> ) </mo>
+             <mo>+</mo>
+             <mn>1</mn>
+            </mrow>
+           </math> 
+          </b>
+         </span>
+          </p>
+           <br>
+
+           In what follows we will give a overview of best known upper bounds. 
+           This overview is based on Bedich's Thesis <cite>An Introduction to the Happy Ending Problem and the Erdos-Szekeres Conjecture</cite>. 
+           The paper explains in more detail the chronological listing that we show here.
+           <h3>Chung and Graham:</h3>
+           ES(k) <span>&#8804;</span>
+           <math xmlns='http://www.w3.org/1998/Math/MathML'>
+            <mrow>
+              <mo> ( </mo>
+            <mfrac linethickness="0">
+              <mi> 2k - 4 </mi>
+              <mi> k - 2 </mi>
+            </mfrac>
+              <mo> ) </mo>
+             </mrow>
+           </math> 
+           <h3>Kleitman and Pachter:</h3>
+           ES(k) <span>&#8804;</span>
+           <math xmlns='http://www.w3.org/1998/Math/MathML'>
+            <mrow>
+              <mo> ( </mo>
+            <mfrac linethickness="0">
+              <mi> 2k - 4 </mi>
+              <mi> k - 2 </mi>
+            </mfrac>
+              <mo> ) </mo>
+             <mo>+</mo>
+             <mn>7</mn>
+             <mo>-</mo>
+             <mn>2k</mn>
+            </mrow>
+           </math> 
+
+           <h3>Toth and Valtr:</h3>
+           ES(k) <span>&#8804;</span>
+           <math xmlns='http://www.w3.org/1998/Math/MathML'>
+            <mrow>
+              <mo> ( </mo>
+            <mfrac linethickness="0">
+              <mi> 2k - 5 </mi>
+              <mi> k - 3 </mi>
+            </mfrac>
+              <mo> ) </mo>
+             <mo>+</mo>
+             <mn>2</mn>
+            </mrow>
+           </math> 
+           <h3>Suk:</h3>
+           <b> 
+           ES(k) <span>&#8804;</span> 
+           
+            <math xmlns='http://www.w3.org/1998/Math/MathML'>
+            <mrow>
+             <msup>
+              <mn>2</mn>
+              <mrow>
+               <mi>k</mi>
+               <mo>+</mo>
+                <mn>o(k)</mn>
+              </mrow>
+             </msup>
+             <mo>+</mo>
+             <mn>1</mn>
+            </mrow>
+           </math>
+          </b>
+           <br>
+           <br>
+           This is a big improvement compared to the above and the <b>best upper bound to date.</b>
+           More details on these bounds and there proofs can be found in the Authors papers. 
+           In the next and last section we will focus on the computer proof for the specific value k = 6.
+          </p>
+          <h2>The 17-point Erdos-Szekeres Problem</h2>
+          We will now focus on the computer proof and its algorithm that was published in the 2006 paper 
+          <cite>Computer solution to the 17-point Erdos-Szekeres problem</cite> by Lindsay Peters and George Szekeres. This is the latest
+          proof given a specific value for k.
+          <br> 
+          <b>What is the smalest set of N points neccesary to guaranty that a convex 6-subset always exists?</b>
+
       </div>
     </div>
   </div>
