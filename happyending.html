@@ -42,7 +42,7 @@
         <p>The convex quadrilateral mentioned in the introduction can be caled a 4-gon or a k-gon where k equals 4.
             Finding k-gon's became one of the main questions of Szekeres and Erdos work mentioned above.
             <b>Is there a function of k that gives us the minimum size a point set N needs to be to guaranty the k-gon exists?</b>
-        Untill today this question is still unsolved and unproven.
+        Untill today this question is still unproven.
         <a href="https://en.wikipedia.org/wiki/Ronald_Graham" title="Ronald Graham">Ronald Graham</a> 
         challenges the viewer for $1000 to come up with a solution to this problem in the following <a href= "https://www.numberphile.com/" title="Numberphile">Numberphile</a>
         <a href="https://www.youtube.com/watch?v=xPk3SZiFEvQvideo" title="happy ending">video.</a> 
@@ -190,8 +190,87 @@
           <br> 
           <b>What is the smalest set of N points neccesary to guaranty that a convex 6-subset always exists?</b>
           <p>
+            <h3>Observations:</h3>
+            In order to build this computer proof we will now go trough a couple of observations and definitions neccesary to be
+            able to construct an algoithm that will serve as proof to the hypothesis.
+            A basic observation is the fact that the orientation of a triangle can be defined as clock or anto clockwise acording to the path
+            one  makes to draw the triangle. Since the points in the euclidean plane are sorted by increasing x-coordinate this observation can serve as
+            an indication for convexity of a k-gon or k-subset of points.
+            <br>
+            <b>Whenever all triangles after the triangulation of a k-subset have the same orientation,
+            we know that the k-subset containing those equally oriented triangles is a convex k-subset of points.</b>
+            </p>
+            <p>
+            <canvas id="myCanvas" width="300" height="150"></canvas>
 
-          </p>
+            <script>
+        var canvasElement = document.querySelector("#myCanvas");
+var context = canvasElement.getContext("2d");
+
+//context.font = "8px Arial";
+//context.fillText("P1", 100, 30);
+
+let p1x = 50;
+let p1y = 140;
+let p2x = 80;
+let p2y = 10;
+let p3x = 100;
+let p3y = 75;
+let p4x = 140;
+let p4y = 75;
+
+// draw vertice/circle
+function vertice(ctx, x, y){
+  ctx.beginPath();
+  ctx.font = "8px Atial";
+ctx.fillText("p1", x + 5 , y - 10 );
+  ctx.arc(x, y, 4, 0 , 2* Math.PI);
+  ctx.stroke();
+}
+
+vertice(context, p1x, p1y);
+
+vertice(context, p2x, p2y);
+vertice(context, p3x, p3y);
+vertice(context, p4x, p4y);
+
+
+// draw triangle
+function triangle(ctx, x1,y1,x2,y2,x3,y3, color){
+  context.beginPath()
+  context.strokeStyle = color
+  context.moveTo(x1, y1);
+  context.lineTo(x2, y2);
+  context.lineTo(x3, y3);
+  context.lineTo(x1, y1);
+  context.stroke();
+}
+// draw quadrilateral
+function quadrilateral(ctx, x1,y1,x2,y2,x3,y3,x4,y4){
+  context.beginPath() 
+  context.moveTo(x1, y1);
+  context.lineTo(x2, y2);
+  context.lineTo(x3, y3);
+  context.lineTo(x4, y4);
+  context.lineTo(x1, y1);
+  context.stroke();
+}
+
+//quadrilateral(context, p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y);
+triangle(context, p1x, p1y, p2x, p2y, p3x, p3y, "red");
+triangle(context, p1x, p1y, p3x, p3y, p4x, p4y, "green");
+
+// the outline
+
+
+
+//context.fill();
+// the fill color
+//context.fillStyle = "#FFCC00";
+//context.fill();
+            </script>
+</p>
+         
 
       </div>
     </div>
