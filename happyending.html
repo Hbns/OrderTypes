@@ -28,20 +28,22 @@
       <div id="content">
         <h1 class="bold_title">Happy Ending problem</h1>
         <h2>Introduction</h2>
-        <p><a href="https://en.wikipedia.org/wiki/Esther_Szekeres" title="Esther Szekeres">Esther Klein</a>
-            a mathematician, introduced the mathematical problem that would become called the Happy ending Problem.
+        <p>
+          The mathematician
+          <a href="https://en.wikipedia.org/wiki/Esther_Szekeres" title="Esther Szekeres">Esther Klein</a>
+            introduced the mathematical problem that would become known as the Happy ending Problem.
             <b>She observed that for any given set of five points in general position, one can find a subset of four
-            points that form a convex quadrilateral.</b> Two of her peers at the time 
+            points that form a convex quadrilateral.</b> Two of her peers at the time, 
             <a href="https://en.wikipedia.org/wiki/Paul_Erd%C5%91s" title="Paul Erdos">Paul Erdos</a> and
-            <a href="https://en.wikipedia.org/wiki/George_Szekeres" title="George Szekeres">George Szekeres</a>
+            <a href="https://en.wikipedia.org/wiki/George_Szekeres" title="George Szekeres">George Szekeres</a>,
             ended up working on Klein's problem in a general form. 
             This eventualy led to the mariage of Esther Klein and George Szekeres and was there for called 
             the happy ending problem by Paul Erdos.
         </p>
         <h2>K-gon or subset of k points</h2>
-        <p>The convex quadrilateral mentioned in the introduction can be caled a 4-gon or a k-gon where k equals 4.
-            Finding k-gon's became one of the main questions of Szekeres and Erdos work mentioned above.
-            <b>Is there a function of k that gives us the minimum size a point set N needs to be to guaranty the k-gon exists?</b>
+        <p>The convex quadrilateral mentioned in the introduction can be called a 4-gon or a k-gon where k equals 4.
+            Finding k-gons became one of the main questions of Szekeres and Erdos' work mentioned above.
+            <b>Is there a function of k that gives us the minimum size that a point set N needs to be to guarantee that the k-gon exists?</b>
         Untill today this question is still unproven.
         <a href="https://en.wikipedia.org/wiki/Ronald_Graham" title="Ronald Graham">Ronald Graham</a> 
         challenges the viewer for $1000 to come up with a solution to this problem in the following <a href= "https://www.numberphile.com/" title="Numberphile">Numberphile</a>
@@ -50,7 +52,7 @@
         <h2>Erdos-Szekeres Conjecture</h2>
         <p>
           Proofs exist for the problem when using the specific values 3, 4, 5 and more recently proved 6 for k. But the general form has not been proved,
-          thus it is formulated as a conjecture, and known as the Erdos and Szekeres conjecture .
+          thus it is formulated as a conjecture, and known as the Erdos and Szekeres conjecture.
            Where for a k bigger then three the set of points N needs to be at least of size 
            <math xmlns='http://www.w3.org/1998/Math/MathML'>
             <mrow>
@@ -70,13 +72,13 @@
         </p>
         <h2>Upperbound When Calculating K-gons</h2>
         <p>
-          The conjecture mentioned above uses the fact that a upperbound exists for the calculation of a subset of k points or k-gon.
+          The conjecture mentioned above uses the fact that an upperbound exists for the calculation of a subset of k points or k-gon.
           This was proven in 1935 in the original paper <cite>A combinatorial problem in geometry</cite> by Erdos and Szekeres. 
           The proof is based on <a href="https://en.wikipedia.org/wiki/Ramsey%27s_theorem" title="Ramsey's theorem">Ramsey's theorem</a>
-          for 2-colored hypergraphs. Since it was proven that such a upperbound exists multiple attemps to difine it happend over time. 
+          for 2-colored hypergraphs. Since it was proven that such an upperbound exists, there were multiple attemps to define it over time. 
         </p>
         <h2>Defining The Upperbound</h2>
-        <p>Multiple attemps to proof and define the upperbounds exist, but none of all is as small as the value proposed in the Erdos-Szekeres conjecture.<br>
+        <p>Multiple attemps to proof and define the upperbounds exist, but none were as small as the value proposed in the Erdos-Szekeres conjecture.<br>
           <p style="padding: 10px; border: 2px solid red;">
           Erdos-Szekeres Conjecture <b>Lower Bound ES(k) =  
           <math xmlns='http://www.w3.org/1998/Math/MathML'>
@@ -111,10 +113,11 @@
          </span>
           </p>
            <br>
-
-           In what follows we will give a overview of best known upper bounds. 
+<p>
+           In what follows we will give an overview of best known upper bounds. 
            This overview is based on Bedich's Thesis <cite>An Introduction to the Happy Ending Problem and the Erdos-Szekeres Conjecture</cite>. 
            The paper explains in more detail the chronological listing that we show here.
+          </p>
            <h3>Chung and Graham:</h3>
            ES(k) <span>&#8804;</span>
            <math xmlns='http://www.w3.org/1998/Math/MathML'>
@@ -179,99 +182,231 @@
           </b>
            <br>
            <br>
-           This is a big improvement compared to the above and the <b>best upper bound to date.</b>
-           More details on these bounds and there proofs can be found in the Authors papers. 
-           In the next and last section we will focus on the computer proof for the specific value k = 6.
           </p>
+           <p>
+           This latest improvement is big compared to the jumps between the other results above and the <b>best upper bound to date.</b>
+           More details on these bounds and their proofs can be found in the Authors papers. 
+           In the next section we will focus on the computer proof for the specific values where k = 5 and k = 6.
+          </p>
+          
           <h2>The 17-point Erdos-Szekeres Problem</h2>
+          <p>
           We will now focus on the computer proof and its algorithm that was published in the 2006 paper 
           <cite>Computer solution to the 17-point Erdos-Szekeres problem</cite> by Lindsay Peters and George Szekeres. This is the latest
           proof given a specific value for k.
           <br> 
-          <b>What is the smalest set of N points neccesary to guaranty that a convex 6-subset always exists?</b>
+          <b>What is the smalest set of N points neccesary to guarantee that a convex 6-subset always exists?</b>
+        </p>
           <p>
             <h3>Observations:</h3>
+            <p>
             In order to build this computer proof we will now go trough a couple of observations and definitions neccesary to be
-            able to construct an algoithm that will serve as proof to the hypothesis.
-            A basic observation is the fact that the orientation of a triangle can be defined as clock or anto clockwise acording to the path
-            one  makes to draw the triangle. Since the points in the euclidean plane are sorted by increasing x-coordinate this observation can serve as
-            an indication for convexity of a k-gon or k-subset of points.
+            able to construct an algorithm that will serve as proof to the hypothesis.
+            A basic observation is the fact that the orientation of a triangle can be defined as clockwise or anti-clockwise according 
+            to the orientation of the path one creates to draw the triangle. 
+            Based on the theorem by <a href="https://en.wikipedia.org/wiki/Bartel_Leendert_van_der_Waerden" title="BL van der Waerden">BL van der Waerden</a>
+            as shown in <cite>A course in combinatorics</cite> we can lean on the fact that if there is a k-subset of points for which all
+            triangles have the same orientation that k-subset or k-gon is convex. 
             <br>
-            <b>Whenever all triangles after the triangulation of a k-subset have the same orientation,
-            we know that the k-subset containing those equally oriented triangles is a convex k-subset of points.</b>
+          </p>
             </p>
             <p>
+          <!-- drawing vertices and triangles -->          
             <canvas id="myCanvas" width="300" height="150"></canvas>
-
             <script>
-        var canvasElement = document.querySelector("#myCanvas");
-var context = canvasElement.getContext("2d");
+            
+            var canvasElement = document.querySelector("#myCanvas");
+            var context = canvasElement.getContext("2d");
 
-//context.font = "8px Arial";
-//context.fillText("P1", 100, 30);
+            // non-convex points example
+            let p1x = 50;
+            let p1y = 140;
+            let p2x = 80;
+            let p2y = 30;
+            let p3x = 100;
+            let p3y = 75;
+            let p4x = 140;
+            let p4y = 75;
 
-let p1x = 50;
-let p1y = 140;
-let p2x = 80;
-let p2y = 10;
-let p3x = 100;
-let p3y = 75;
-let p4x = 140;
-let p4y = 75;
+            // convex points example
 
-// draw vertice/circle
-function vertice(ctx, x, y){
-  ctx.beginPath();
-  ctx.font = "8px Atial";
-ctx.fillText("p1", x + 5 , y - 10 );
-  ctx.arc(x, y, 4, 0 , 2* Math.PI);
-  ctx.stroke();
-}
+            let p5x = 210;
+            let p5y = 140;
+            let p6x = 250;
+            let p6y = 140;
+            let p7x = 270;
+            let p7y = 30;
+            let p8x = 220;
+            let p8y = 30;
 
-vertice(context, p1x, p1y);
+            // to draw circle/vertice
+            function vertice(ctx, x, y, name){
+              ctx.beginPath();
+              ctx.font = "10px Atial";
+              ctx.fillText(name, x + 5 , y - 10 );
+              ctx.arc(x, y, 4, 0 , 2* Math.PI);
+              ctx.stroke();
+            }
 
-vertice(context, p2x, p2y);
-vertice(context, p3x, p3y);
-vertice(context, p4x, p4y);
+            // non convex quadrilateral
+            vertice(context, p1x, p1y, "p1");
+            vertice(context, p2x, p2y, "p2");
+            vertice(context, p3x, p3y, "p3");
+            vertice(context, p4x, p4y, "p4");
+
+            //convex quadrilateral
+            vertice(context, p5x, p5y, "p5");
+            vertice(context, p6x, p6y, "p6");
+            vertice(context, p7x, p7y, "p7");
+            vertice(context, p8x, p8y, "p8");
+
+            // to draw triangle
+            function triangle(ctx, x1,y1,x2,y2,x3,y3, color){
+              context.beginPath()
+              context.strokeStyle = color
+              context.moveTo(x1, y1);
+              context.lineTo(x2, y2);
+              context.lineTo(x3, y3);
+              context.lineTo(x1, y1);
+              context.stroke();
+            }
+            // to draw quadrilateral
+            function quadrilateral(ctx, x1,y1,x2,y2,x3,y3,x4,y4){
+              context.beginPath() 
+              context.moveTo(x1, y1);
+              context.lineTo(x2, y2);
+              context.lineTo(x3, y3);
+              context.lineTo(x4, y4);
+              context.lineTo(x1, y1);
+              context.stroke();
+            }
+
+            //non convex
+            triangle(context, p1x, p1y, p2x, p2y, p3x, p3y, "green");
+            triangle(context, p1x, p1y, p3x, p3y, p4x, p4y, "green");
+            triangle(context, p2x, p2y, p3x, p3y, p4x, p4y, "red");
+
+            //convex
+            triangle(context, p5x, p5y, p6x, p6y, p7x, p7y, "green");
+            triangle(context, p5x, p5y, p7x, p7y, p8x, p8y, "green");
+            triangle(context, p6x, p6y, p7x, p7y, p8x, p8y, "green");
 
 
-// draw triangle
-function triangle(ctx, x1,y1,x2,y2,x3,y3, color){
-  context.beginPath()
-  context.strokeStyle = color
-  context.moveTo(x1, y1);
-  context.lineTo(x2, y2);
-  context.lineTo(x3, y3);
-  context.lineTo(x1, y1);
-  context.stroke();
-}
-// draw quadrilateral
-function quadrilateral(ctx, x1,y1,x2,y2,x3,y3,x4,y4){
-  context.beginPath() 
-  context.moveTo(x1, y1);
-  context.lineTo(x2, y2);
-  context.lineTo(x3, y3);
-  context.lineTo(x4, y4);
-  context.lineTo(x1, y1);
-  context.stroke();
-}
-
-//quadrilateral(context, p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y);
-triangle(context, p1x, p1y, p2x, p2y, p3x, p3y, "red");
-triangle(context, p1x, p1y, p3x, p3y, p4x, p4y, "green");
-
-// the outline
-
-
-
-//context.fill();
-// the fill color
-//context.fillStyle = "#FFCC00";
-//context.fill();
             </script>
-</p>
-         
+          </p>
+          <p>
+            Visually we can see that for the non-convex quadrilateral on the left, the red triangle does not have the same orientation 
+            as the green triangles. the triangles (p1, p2, p3) and (p1, p3, p4) have a clockwise orientation while the 
+            triangle (p2, p3, p4) has a counter-clockwise orientation, hence the quadrilateral in not convex. Different is the convex quadrilateral
+            on the right, all four triangles have the same orientation. 
+            This will form the basis to detect convexity during the algorithm in the proof.
+          </p>
+          <h3>Computer proof: </h3>
+          <p>
+            What follows is a detailed step by step explanation of the computerproof that guarantees a 5-gon exists in every set of 9 points.
+            After this detailed explanation we will discuss how the computerproof is adapted for the 6-gon in every set of 17 points.
+            We start by setting up an array Am of size m. The size m is the total number of possible combinations of triples
+            to be found in the set of nine points or
+            <math xmlns='http://www.w3.org/1998/Math/MathML'>
+              <mrow>
+                <mo> ( </mo>
+              <mfrac linethickness="0">
+                <mi> 9 </mi>
+                <mi> 3 </mi>
+              </mfrac>
+                <mo> ) </mo>
+                </mrow>
+             </math> 
+             = 84.
+             Each entry in the array will contain a + or - sign according to the orientation of that triple. That gives us a total of 
+             <math xmlns='http://www.w3.org/1998/Math/MathML'>
+              <mrow>
+               <msup>
+                <mn>2</mn>
+                <mrow>
+                 <mi>m</mi>
+                   </mrow>
+               </msup>
+                </mrow>
+             </math>
+             possible states of the array. We also define 4 convex relations, all triples in the convex 5-subset must validate at least one 
+             of those four convex relations. That is for all 
+             <math xmlns='http://www.w3.org/1998/Math/MathML'>
+              <mrow>
+                <mo> ( </mo>
+              <mfrac linethickness="0">
+                <mi> 5 </mi>
+                <mi> 3 </mi>
+              </mfrac>
+                <mo> ) </mo>
+                </mrow>
+             </math> 
+             = 10 triples in the convex 5-subset or 5-gon.
+          </p>
+          <p>
+            <!-- drawing vertices and triangles -->          
+              <canvas id="my2ndCanvas" width="300" height="150"></canvas>
+              <script>
+              
+              var canvasElement = document.querySelector("#my2ndCanvas");
+              var context = canvasElement.getContext("2d");
+  
+              // points for the example
 
+              let p9x = 30;
+              let p9y = 60;
+              let p10x = 45;
+              let p10y = 140;
+              let p11x = 95;
+              let p11y = 30;
+              let p12x = 115;
+              let p12y = 140;
+              let p13x = 150;
+              let p13y = 60;
+                          
+              // five points
+              vertice(context, p9x, p9y, "p9");
+              vertice(context, p10x, p10y, "p10");
+              vertice(context, p11x, p11y, "p11");
+              vertice(context, p12x, p12y, "p12");
+              vertice(context, p13x, p13y, "p13");
+            
+              // convex relation
+              triangle(context, p9x, p9y, p10x, p10y, p12x, p12y, "green");
+              triangle(context, p10x, p10y, p12x, p12y, p13x, p13y, "orange");
+              triangle(context, p9x, p9y, p11x, p11y, p13x, p13y, "red");          
+  
+              </script>
+            </p>
+            <p>
+              The example above shows the geometrical realisation for 3 of the 10 triples, these 3 triples validate one of the 4 convex relations.
+              For this example, the convex relation that is validated by the triples (p9, p10, p21), (p10, p12, p13), (p9, p11, p13) is 
+              R3: orientation(p9, p10, p12) = orientation(p10, p12, p13) = -orientation(p9, p11, p13). 
+              All ten triples have to fit in one of the four relations to call the 5-gon convex.
+            </p>
+         <h3>Hypothesis: </h3>
+         <p>
+        There is a set of orientations that fit convexity and a second set of orientations called concave that doesn't fit convexity 
+        for all the possible triples. The proof will use the concave set of orientations to construct a contradiction.
+                  <br>
+         This brings us to the hypothesis equal to <u>for any 9 points (no 3 on a row) there is at least one convex 5-subset.</u>
+         <br>
+         <p style="padding: 10px; border: 2px solid red;">
+          <b>No state of the Array Am can consist of orientations found in the concave set for every 5-subset in the set S containing nine points.</b></p>
+         <p>  
+         We assume that such a state of Am can be assigned from the concave set of orientations, and show that tis leads to a contradiction.
+         this computerproof by contradiction proofs that a convex 5-subset or 5-gon exists in every case.
+        </p>
+      </p>
+      <h3>Proof extentions for K = 6: </h3>
+      <p>
+
+      The numbers get bigger, there are more possibilities and more checks in the algortihm are needed. The set of concave orientations is reduced 
+      to only the orientations that satisfy the relations in the previous proof. This brings the number of concave orientation signatures to 892
+      instead of the total 184,556. To date, running the algortihm with the full number of orientation signatures has not been 
+      done since consequent time will be required. The search for the contradiction will happen at multiple steps in the algorithm, 
+      so that the next itteration can start, and the current one canceled as quick as possible.
+    </p>
       </div>
     </div>
   </div>
