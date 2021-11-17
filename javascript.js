@@ -4,18 +4,20 @@ var ot_data = {};
 var data_ot9_ready = false;
 var extrem_09_ready = false;
 
+// database url
+const oturl = "https://www.slef.org/ot/";
 /**
  * Asynchronously loads a portion of the files to search through of the database
  */
 async function getBlobs() {
     const [ot3, ot4, ot5, ot6, ot7, ot8, ot9] = await Promise.all([
-        fetch('/ot_data/otypes/otypes03.b08'),
-        fetch('/ot_data/otypes/otypes04.b08'),
-        fetch('/ot_data/otypes/otypes05.b08'),
-        fetch('/ot_data/otypes/otypes06.b08'),
-        fetch('/ot_data/otypes/otypes07.b08'),
-        fetch('/ot_data/otypes/otypes08.b08'),
-        fetch('/ot_data/otypes/otypes09.b16')
+        fetch(oturl+'otypes03.b08'),
+        fetch(oturl+'otypes04.b08'),
+        fetch(oturl+'otypes05.b08'),
+        fetch(oturl+'otypes06.b08'),
+        fetch(oturl+'otypes07.b08'),
+        fetch(oturl+'otypes08.b08'),
+        fetch(oturl+'otypes09.b16')
     ]);
 
     ot_data["otypes03_b08"] = await ot3.arrayBuffer();
@@ -34,13 +36,13 @@ async function getBlobs() {
  */
 async function getBlobsExtremePoints() {
     const [extr3, extr4, extr5, extr6, extr7, extr8, extr9] = await Promise.all([
-        fetch('/ot_data/extrem/extrem03.b08'),
-        fetch('/ot_data/extrem/extrem04.b08'),
-        fetch('/ot_data/extrem/extrem05.b08'),
-        fetch('/ot_data/extrem/extrem06.b08'),
-        fetch('/ot_data/extrem/extrem07.b08'),
-        fetch('/ot_data/extrem/extrem08.b08'),
-        fetch('/ot_data/extrem/extrem09.b08')
+        fetch(oturl+'extrem03.b08'),
+        fetch(oturl+'extrem04.b08'),
+        fetch(oturl+'extrem05.b08'),
+        fetch(oturl+'extrem06.b08'),
+        fetch(oturl+'extrem07.b08'),
+        fetch(oturl+'extrem08.b08'),
+        fetch(oturl+'extrem09.b08')
     ])
 
     ot_data["extrem03_b08"] = await extr3.arrayBuffer();
@@ -52,6 +54,31 @@ async function getBlobsExtremePoints() {
     ot_data["extrem09_b08"] = await extr9.arrayBuffer();
 
     extrem_09_ready = true;
+}
+
+/**
+ * Asynchronously loads the property files containing the number of extreme points of the database
+ */
+ async function getBlobsKgons() {
+    const [kgons3, kgons4, kgons5, kgons6, kgons7, kgons8, kgons9] = await Promise.all([
+        fetch(oturl+'kgons03.b08'),
+        fetch(oturl+'kgons04.b08'),
+        fetch(oturl+'kgons05.b08'),
+        fetch(oturl+'kgons06.b08'),
+        fetch(oturl+'kgons07.b08'),
+        fetch(oturl+'kgons08.b08'),
+        fetch(oturl+'kgons09.b08')
+    ])
+
+    ot_data["kgons03_b08"] = await kgons3.arrayBuffer();
+    ot_data["kgons04_b08"] = await kgons4.arrayBuffer();
+    ot_data["kgons05_b08"] = await kgons5.arrayBuffer();
+    ot_data["kgons06_b08"] = await kgons6.arrayBuffer();
+    ot_data["kgons07_b08"] = await kgons7.arrayBuffer();
+    ot_data["kgons08_b08"] = await kgons8.arrayBuffer();
+    ot_data["kgons09_b08"] = await kgons9.arrayBuffer();
+
+    kgons_09_ready = true;
 }
 
 /**
