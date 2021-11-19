@@ -3,6 +3,7 @@ var ot_data = {};
 // flags that signal that files finished downloading and are ready for use
 var data_ot9_ready = false;
 var extrem_09_ready = false;
+var kgons_09_ready = false;
 
 // database url
 const oturl = "https://www.slef.org/ot/";
@@ -367,6 +368,21 @@ function searchByConvexLayers(n, layers) {
                 if (points.length > 0) supposition++;
             }
             if (supposition === layers) res.push(i);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+    return res;
+}
+function searchByKgon(k){
+    let key = "kgons0" + n + "_b08";
+    let arr = new Uint8Array(ot_data[key]);
+    let res = [];
+    try {
+        for (let i in arr) {
+            if (Number(arr[i]) === chSize) {
+                res.push(i);
+            }
         }
     } catch (e) {
         console.error(e);

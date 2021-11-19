@@ -637,10 +637,17 @@ function changeSearchProperty(selectedObject) {
         case "nb_points_CH":
             document.getElementById("nb_points_CH_div").style.display = "block";
             document.getElementById("nb_conv_layers_div").style.display = "none";
+document.getElementById("nb_kgons_div").style.display = "none";
             break;
         case "nb_conv_layers":
             document.getElementById("nb_points_CH_div").style.display = "none";
             document.getElementById("nb_conv_layers_div").style.display = "block";
+document.getElementById("nb_kgons_div").style.display = "none";
+            break;
+	case "nb_kgons":
+            document.getElementById("nb_points_CH_div").style.display = "none";
+            document.getElementById("nb_conv_layers_div").style.display = "none";
+	    document.getElementById("nb_kgons_div").style.display = "block";
             break;
     }
 }
@@ -701,6 +708,27 @@ function clickOnSearchByNbConvLayers() {
     clickOnSearchGo();
 }
 
+
+/**
+ * Performs a search for order types with k-subset of value k
+ * (selected by the user). The search results panel is displayed in order to
+ * allow the user to see the different results and the first result (if any) is
+ * loaded in the working canvas.
+ */
+function clickOnSearchByKgon() {
+    clearSearchResults();
+    let nbKgon = Number(document.getElementById("nb_kgon_count").value);
+    for (let nbPts = 3; nbPts <= 9; nbPts++) {
+        let res = searchByConvexLayers(nbPts, nbConvLayers);
+        for (let i of res) {
+            searchRes.push([nbPts, Number(i)]);
+        }
+    }
+    document.getElementById("res_nb_extrem_points_total").innerText = "Found " + searchRes.length + " entries corresponding to the search";
+    document.getElementById("res_nb_extrem_points_current").max = Number(searchRes.length);
+    document.getElementById("search_result").style.display = "block";
+    clickOnSearchGo();
+}
 function afterLoading() {
     connectButtons();
     getBlobs();
@@ -789,6 +817,9 @@ function connectButtons() {
     document.getElementById("res_nb_extrem_points_next").onclick = clickOnSearchNext;
     document.getElementById("res_nb_extrem_points_go").onclick = clickOnSearchGo;
     document.getElementById("propLayersSearch").onclick = clickOnSearchByNbConvLayers;
+document.getElementById("propKgonSearch").onclick = clickOnSearchByKgon;
+
+
 
     document.getElementById("visib").style.display = "none";
 
