@@ -378,8 +378,19 @@ function searchByConvexLayers(n, layers) {
 function searchByKgon(n, k){
     let key = "kgons0" + n + "_b08";
     let arr = new Uint8Array(ot_data[key]);
-    console.log("arr: " + arr);
+    let pointSet = readPointSet(readOtypeDataset(n), 0, n); 
+    console.log(pointSet);
+    const coords = [pointSet[0].x,pointSet[0].y, pointSet[1].x,pointSet[1].y, pointSet[2].x,pointSet[2].y, pointSet[3].x,pointSet[3].y, 
+    pointSet[4].x,pointSet[4].y ];
+    let delaunay = new Delaunator(coords);
+    console.log(delaunay.triangles[0]);
     let res = [];
+    for (let e = 0; e < delaunay.triangles.length; e++){
+        if (e > delaunay.halfedges[e]) {
+            let p = new Point(pointSet[delaunay.triangles[e]].x, pointSet[delaunay.triangles[e]].y);
+            // https://mapbox.github.io/delaunator/ find the coordinates and think about how to draw them.
+            // triangulate to later check orientation and find convex k-subsets.
+    }
     try {
         for (let i in arr) {
             if (Number(arr[i]) === k) {
