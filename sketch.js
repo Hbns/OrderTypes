@@ -603,7 +603,7 @@ function clearSearchResults() {
 /**
  * Reacts to the action of user of changing the search type
  * by modifying the displayed fields in order to match the
- * desired search method.
+ * desired search method. make sure to call getBlobsxx when adding a new property.
  * @param selectedObject the selected search type
  */
 function changeSearchType(selectedObject) {
@@ -619,6 +619,10 @@ function changeSearchType(selectedObject) {
             if (!extrem_09_ready) {
                 getBlobsExtremePoints();
             }
+            if (!kgons_09_ready){
+                console.log("dl kgons..")
+                getBlobsKgons();    
+                }
             document.getElementById("index_search_div").style.display = "none";
             document.getElementById("property_search_div").style.display = "block";
             break;
@@ -695,6 +699,7 @@ function clickOnExtremePointsSearch() {
  */
 function clickOnSearchByNbConvLayers() {
     clearSearchResults();
+    
     let nbConvLayers = Number(document.getElementById("nb_conv_layers_count").value);
     for (let nbPts = 3; nbPts <= 9; nbPts++) {
         let res = searchByConvexLayers(nbPts, nbConvLayers);
@@ -717,13 +722,18 @@ function clickOnSearchByNbConvLayers() {
  */
 function clickOnSearchByKgon() {
     clearSearchResults();
-    let nbKgon = Number(document.getElementById("nb_kgon_count").value);
-    for (let nbPts = 3; nbPts <= 9; nbPts++) {
-        let res = searchByConvexLayers(nbPts, nbConvLayers);
-        for (let i of res) {
-            searchRes.push([nbPts, Number(i)]);
-        }
+    if (!kgons_09_ready) {
+        displayError("K-gon files are still downloading, please wait");
+        return;
     }
+    let nbPoints = Number(document.getElementById("nb_points_count").value);
+    let nbKgon = Number(document.getElementById("nb_kgon_count").value);
+    
+        let res = searchByKgon(nbPoints, nbKgon);
+        for (let i of res) {
+            searchRes.push([nbPoints, Number(i)]);
+        }
+    
     document.getElementById("res_nb_extrem_points_total").innerText = "Found " + searchRes.length + " entries corresponding to the search";
     document.getElementById("res_nb_extrem_points_current").max = Number(searchRes.length);
     document.getElementById("search_result").style.display = "block";

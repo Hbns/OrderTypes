@@ -7,6 +7,7 @@ var kgons_09_ready = false;
 
 // database url
 const oturl = "https://www.slef.org/ot/";
+
 /**
  * Asynchronously loads a portion of the files to search through of the database
  */
@@ -62,13 +63,13 @@ async function getBlobsExtremePoints() {
  */
  async function getBlobsKgons() {
     const [kgons3, kgons4, kgons5, kgons6, kgons7, kgons8, kgons9] = await Promise.all([
-        fetch(oturl+'kgons03.b08'),
-        fetch(oturl+'kgons04.b08'),
-        fetch(oturl+'kgons05.b08'),
-        fetch(oturl+'kgons06.b08'),
-        fetch(oturl+'kgons07.b08'),
-        fetch(oturl+'kgons08.b08'),
-        fetch(oturl+'kgons09.b08')
+        fetch('kgons03.b08'),
+        fetch('kgons04.b08'),
+        fetch('kgons05.b08'),
+        fetch('kgons06.b08'),
+        fetch('kgons07.b08'),
+        fetch('kgons08.b08'),
+        fetch('kgons09.b08') 
     ])
 
     ot_data["kgons03_b08"] = await kgons3.arrayBuffer();
@@ -374,14 +375,16 @@ function searchByConvexLayers(n, layers) {
     }
     return res;
 }
-function searchByKgon(k){
+function searchByKgon(n, k){
     let key = "kgons0" + n + "_b08";
     let arr = new Uint8Array(ot_data[key]);
+    console.log("arr: " + arr);
     let res = [];
     try {
         for (let i in arr) {
-            if (Number(arr[i]) === chSize) {
+            if (Number(arr[i]) === k) {
                 res.push(i);
+                
             }
         }
     } catch (e) {
