@@ -375,31 +375,40 @@ function searchByConvexLayers(n, layers) {
     }
     return res;
 }
+// generate indexes to check if k-gons exist in those sets.
+function indexesNeeded(n, k, length){
+    let indexes = [];
+    let next = n - 2; // add next to idx to find next k-gon.
+    indexes.push(k - 3); // index in the arr to find first k-gon.
+    
+    for (let i = 0; i < length ; i++){
+        indexes.push(indexes[i] + next);
+    }
+    indexes = indexes.slice(0, indexes.length - 1); // remove last element.
+    console.log("idxs: " + indexes);
+
+    return indexes; 
+}
+
 function searchByKgon(n, k){
     let key = "kgons0" + n + "_b08";
     let arr = new Uint8Array(ot_data[key]);
-    let pointSet = readPointSet(readOtypeDataset(n), 0, n); 
-    console.log(pointSet);
-    const coords = [pointSet[0].x,pointSet[0].y, pointSet[1].x,pointSet[1].y, pointSet[2].x,pointSet[2].y, pointSet[3].x,pointSet[3].y, 
-    pointSet[4].x,pointSet[4].y ];
-    let delaunay = new Delaunator(coords);
-    console.log(delaunay.triangles[0]);
+    console.log("full: " + arr);
+    let sets = arr.length / (n - 2);
+    let idxs = indexesNeeded(n, k, sets); // indexes in arr to check for a givven input of n and k.
     let res = [];
-    for (let e = 0; e < delaunay.triangles.length; e++){
-        if (e > delaunay.halfedges[e]) {
-            let p = new Point(pointSet[delaunay.triangles[e]].x, pointSet[delaunay.triangles[e]].y);
-            // https://mapbox.github.io/delaunator/ find the coordinates and think about how to draw them.
-            // triangulate to later check orientation and find convex k-subsets.
-    }
+    let setnr = 0 // to indetify the pint sets.
     try {
-        for (let i in arr) {
-            if (Number(arr[i]) === k) {
+        for (i in idxs) {
+            if (Number(arr[idxs[i]]) > 0) { // if integer at index > 0 k-gons exist, 
                 res.push(i);
-                
+                setnr += 1;
             }
         }
     } catch (e) {
         console.error(e);
     }
+    console.log("resu: " + res);
     return res;
+
 }

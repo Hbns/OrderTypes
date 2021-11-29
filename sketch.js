@@ -732,6 +732,7 @@ function clickOnSearchByKgon() {
         let res = searchByKgon(nbPoints, nbKgon);
         for (let i of res) {
             searchRes.push([nbPoints, Number(i)]);
+            console.log("resultaat: " + searchRes);
         }
     
     document.getElementById("res_nb_extrem_points_total").innerText = "Found " + searchRes.length + " entries corresponding to the search";
