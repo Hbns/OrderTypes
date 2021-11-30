@@ -260,6 +260,10 @@ function drawCL(canvas) {
     }
 }
 
+function drawKG(canvas){
+    console.log("drawKG");
+}
+
 /**
  * Redraws the contents of the two canvases. Should be called
  * everytime the canvas contents change and when the display
@@ -276,6 +280,7 @@ function update() {
         if (canvas.contents.drawCH) drawCH(canvas);
         if (canvas.contents.drawCG) drawCG(canvas);
         if (canvas.contents.drawCL) drawCL(canvas);
+        if (canvas.contents.drawKG) drawKG(canvas);
     }
     showLM();
 }
@@ -323,6 +328,7 @@ class CanvasContents {
         this.drawCG = false;
         this.drawCH = false;
         this.drawCL = false;
+        this.drawKG = false;
     }
 
     toggleDrawCG() {
@@ -339,6 +345,12 @@ class CanvasContents {
     toggleDrawCL() {
         this.drawCL = !this.drawCL;
     }
+
+    toggleDrawKG() {
+        this.drawKG = !this.drawKG;
+    }
+
+
 
     reset() {
         this.points = [];
@@ -453,6 +465,11 @@ function toggleCGA() {
 
 function toggleCLA() {
     canvasA.contents.toggleDrawCL();
+    canvasA.redraw();
+}
+
+function toggleKGA() {
+    canvasA.contents.toggleDrawKG();
     canvasA.redraw();
 }
 
@@ -811,6 +828,8 @@ function connectButtons() {
     document.getElementById("showchA").onclick = toggleCHA;
     document.getElementById("showcgA").onclick = toggleCGA;
     document.getElementById("showclA").onclick = toggleCLA;
+    document.getElementById("showkgA").onclick = toggleKGA;
+
     document.getElementById("showlm").onclick = showLM;
     document.getElementById("showchB").onclick = toggleCHB;
     document.getElementById("showcgB").onclick = toggleCGB;

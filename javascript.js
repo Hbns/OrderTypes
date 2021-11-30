@@ -375,21 +375,33 @@ function searchByConvexLayers(n, layers) {
     }
     return res;
 }
-// generate indexes to check if k-gons exist in those sets.
-function indexesNeeded(n, k, length){
+/**
+ * 
+ * @param {Number} n ordertype or total points per pointset.
+ * @param {Number} k k-gon, k=3 for 3-gon.
+ * @param {Number} ts total amount of sets to search trough.
+ * @returns array with numbers, indexes to check if k-gons exist in a certain set.
+ */
+function indexesNeeded(n, k, ts) {
     let indexes = [];
-    let next = n - 2; // add next to idx to find next k-gon.
-    indexes.push(k - 3); // index in the arr to find first k-gon.
-    
-    for (let i = 0; i < length ; i++){
+    let next = n - 2; // add next to i to check for k-gon in the next set of points.
+    indexes.push(k - 3); // first index to check for first k-gon.
+
+    for (let i = 0; i < ts; i++) {
         indexes.push(indexes[i] + next);
     }
-    indexes = indexes.slice(0, indexes.length - 1); // remove last element.
-    console.log("idxs: " + indexes);
 
-    return indexes; 
+    indexes = indexes.slice(0, indexes.length - 1); // remove last element, the previous for adds one element after the final i.
+    console.log("idxs: " + indexes);
+    return indexes;
 }
 
+/**
+ * 
+ * @param {number} n ordertype or total points per pointset.
+ * @param {number} k k-gon, k=3 for 3-gon.
+ * @returns array with valid sets, sets that have the k-gons for value k. 
+ */
 function searchByKgon(n, k){
     let key = "kgons0" + n + "_b08";
     let arr = new Uint8Array(ot_data[key]);
