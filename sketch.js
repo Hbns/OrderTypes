@@ -260,8 +260,44 @@ function drawCL(canvas) {
     }
 }
 
+function choose(arr, k, prefix=[]) {
+    if (k == 0) return [prefix];
+    return arr.flatMap((v, i) =>
+        choose(arr.slice(i+1), k-1, [...prefix, v])
+    );
+}
+
 function drawKG(canvas){
-    console.log("drawKG");
+    let nbKgon = Number(document.getElementById("nb_kgon_count").value);
+    let nbPoints = Number(document.getElementById("nb_points_count").value);
+    let pointSet = canvas.contents.points;
+    let range = [];
+    let colors = ["green", "blue", "yellow", "red", "gray", "white", "purple", "violet", "indigo", "gold"]
+    for(let r = 0; r < nbPoints; r++){
+        range.push(r);
+    }
+    console.log("ps: " + pointSet);
+    console.log("ps0: " + pointSet[0][0].x);
+    console.log("ps1: " + pointSet[0][1].x);
+    let posKgons = choose(range, nbKgon);
+    // draws 3-gons since always convex, no check needed.
+    for (let i = 0; i < posKgons.length; i++){
+        canvas.stroke(colors[i]);
+        let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
+        let y1 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][0]].y) + canvasMargin;
+        let x2 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][1]].x + canvasMargin;
+        let y2 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][1]].y) + canvasMargin;
+        let x3 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][2]].x + canvasMargin;
+        let y3 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][2]].y) + canvasMargin;
+        canvas.line(x1, y1, x2, y2); 
+        canvas.line(x2, y2, x3, y3);
+        canvas.line(x3, y3, x1, y1); 
+
+
+    }
+    
+    console.log("drawKG: " + nbKgon + "," + nbPoints);
+    console.log("range: " + range);
 }
 
 /**
