@@ -259,13 +259,57 @@ function drawCL(canvas) {
         drawCH(canvas, chs);
     }
 }
-
+/**
+ * 
+ * @param {Array} arr 
+ * @param {Number} k 
+ * @param {Array} prefix 
+ * @returns Array with posible k-subsets to be verified for convexity.
+ */
 function choose(arr, k, prefix=[]) {
     if (k == 0) return [prefix];
     return arr.flatMap((v, i) =>
         choose(arr.slice(i+1), k-1, [...prefix, v])
     );
 }
+/**
+ * Verify if the given polygon is convex, check if all triangles have the same sign.
+ * @param {Array} polygon array that contains point objects of the polygon 
+ * @returns true if orientationDet is negative for all triangles, false if orientationDet is at least once positive.
+ */
+function isConvex(polygon) {
+    let neg = 0;
+    let pos = 0;
+    for (let i = 0; i < (polygon.length - 2); i++) {
+        if(orientationDet(polygon[i], polygon[i + 1], polygon[i + 2]) < 0){
+            neg = -1;
+        } else {
+            pos = 1;
+        }
+    }
+    // check last triangle
+    if(orientationDet(polygon[polygon.length - 2], polygon[polygon.length - 1], polygon[0]) < 0){
+        neg = -1;
+    } else {
+        pos = 1;
+    }
+    
+    console.log("sign: " + pos);
+    if (pos === 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function generateRGB(){
+    let c = [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]
+    console.log("color: " + c);
+    return c;
+}
+/**
+ * Draw the Kgons inside the set of points.
+ * @param {*} canvas 
+ */
 
 function drawKG(canvas){
     let nbKgon = Number(document.getElementById("nb_kgon_count").value);
@@ -281,21 +325,67 @@ function drawKG(canvas){
     console.log("ps1: " + pointSet[0][1].x);
     let posKgons = choose(range, nbKgon);
     // draws 3-gons since always convex, no check needed.
-    for (let i = 0; i < posKgons.length; i++){
-        canvas.stroke(colors[i]);
-        let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
-        let y1 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][0]].y) + canvasMargin;
-        let x2 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][1]].x + canvasMargin;
-        let y2 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][1]].y) + canvasMargin;
-        let x3 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][2]].x + canvasMargin;
-        let y3 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][2]].y) + canvasMargin;
-        canvas.line(x1, y1, x2, y2); 
-        canvas.line(x2, y2, x3, y3);
-        canvas.line(x3, y3, x1, y1); 
+    switch (nbKgon) {
+        case 3:
+            for (let i = 0; i < posKgons.length; i++) {
+                let color = generateRGB();
+                canvas.stroke(color[0], color[1], color[2]);
+                let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
+                let y1 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][0]].y) + canvasMargin;
+                let x2 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][1]].x + canvasMargin;
+                let y2 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][1]].y) + canvasMargin;
+                let x3 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][2]].x + canvasMargin;
+                let y3 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][2]].y) + canvasMargin;
+                canvas.line(x1, y1, x2, y2);
+                canvas.line(x2, y2, x3, y3);
+                canvas.line(x3, y3, x1, y1);
+            }
+            break;
+            
+        case 4:
+            for (let i = 0; i < posKgons.length; i++) {
+                if (isConvex([pointSet[0][posKgons[i][0]], pointSet[0][posKgons[i][1]], pointSet[0][posKgons[i][2]], pointSet[0][posKgons[i][3]]])) {
+                    let color = generateRGB();
+                    canvas.stroke(color[0], color[1], color[2]);
+                    let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
+                    let y1 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][0]].y) + canvasMargin;
+                    let x2 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][1]].x + canvasMargin;
+                    let y2 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][1]].y) + canvasMargin;
+                    let x3 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][2]].x + canvasMargin;
+                    let y3 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][2]].y) + canvasMargin;
+                    let x4 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][3]].x + canvasMargin;
+                    let y4 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][3]].y) + canvasMargin;
 
-
+                    canvas.line(x1, y1, x2, y2);
+                    canvas.line(x2, y2, x3, y3);
+                    canvas.line(x3, y3, x4, y4);
+                    canvas.line(x4, y4, x1, y1);
+                }
+            }
+            break;
+        case 5:
+            for (let i = 0; i < posKgons.length; i++) {
+                let color = generateRGB();
+                canvas.stroke(color[0], color[1], color[2]);
+                let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
+                let y1 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][0]].y) + canvasMargin;
+                let x2 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][1]].x + canvasMargin;
+                let y2 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][1]].y) + canvasMargin;
+                let x3 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][2]].x + canvasMargin;
+                let y3 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][2]].y) + canvasMargin;
+                let x4 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][3]].x + canvasMargin;
+                let y4 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][3]].y) + canvasMargin;
+                let x5 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][4]].x + canvasMargin;
+                let y5 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][4]].y) + canvasMargin;
+                canvas.line(x1, y1, x2, y2);
+                canvas.line(x2, y2, x3, y3);
+                canvas.line(x3, y3, x4, y4);
+                canvas.line(x4, y4, x5, y5);
+                canvas.line(x5, y5, x1, y1);
+            }
+            break;
+        
     }
-    
     console.log("drawKG: " + nbKgon + "," + nbPoints);
     console.log("range: " + range);
 }
