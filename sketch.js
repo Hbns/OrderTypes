@@ -293,21 +293,24 @@ function isConvex(polygon) {
     } else {
         pos = 1;
     }
-    
-    console.log("sign: " + pos);
     if (pos === 0) {
         return true;
     } else {
         return false;
     }
 }
+/**
+ * 
+ * @returns Rgb color as array with 3 integers.
+ */
 function generateRGB(){
-    let c = [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)]
-    console.log("color: " + c);
-    return c;
+    let rgb = [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
+    return rgb;
 }
 /**
- * Draw the Kgons inside the set of points.
+ * Draw the Kgons inside the set of points after verification for convexity.
+ * If the k-subset is convex it will be showns on the screen.
+ * 
  * @param {*} canvas 
  */
 
@@ -320,9 +323,7 @@ function drawKG(canvas){
     for(let r = 0; r < nbPoints; r++){
         range.push(r);
     }
-    console.log("ps: " + pointSet);
-    console.log("ps0: " + pointSet[0][0].x);
-    console.log("ps1: " + pointSet[0][1].x);
+    // get all the possibel k point combinations to verify.
     let posKgons = choose(range, nbKgon);
     // draws 3-gons since always convex, no check needed.
     switch (nbKgon) {
@@ -344,7 +345,8 @@ function drawKG(canvas){
             
         case 4:
             for (let i = 0; i < posKgons.length; i++) {
-                if (isConvex([pointSet[0][posKgons[i][0]], pointSet[0][posKgons[i][1]], pointSet[0][posKgons[i][2]], pointSet[0][posKgons[i][3]]])) {
+                if (isConvex([pointSet[0][posKgons[i][0]], pointSet[0][posKgons[i][1]], 
+                    pointSet[0][posKgons[i][2]], pointSet[0][posKgons[i][3]]])) {
                     let color = generateRGB();
                     canvas.stroke(color[0], color[1], color[2]);
                     let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
@@ -365,6 +367,8 @@ function drawKG(canvas){
             break;
         case 5:
             for (let i = 0; i < posKgons.length; i++) {
+                if (isConvex([pointSet[0][posKgons[i][0]], pointSet[0][posKgons[i][1]], 
+                    pointSet[0][posKgons[i][2]], pointSet[0][posKgons[i][3]], pointSet[0][posKgons[i][4]]])) {
                 let color = generateRGB();
                 canvas.stroke(color[0], color[1], color[2]);
                 let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
@@ -383,11 +387,11 @@ function drawKG(canvas){
                 canvas.line(x4, y4, x5, y5);
                 canvas.line(x5, y5, x1, y1);
             }
+        }
             break;
         
     }
-    console.log("drawKG: " + nbKgon + "," + nbPoints);
-    console.log("range: " + range);
+    
 }
 
 /**
@@ -763,7 +767,6 @@ function changeSearchType(selectedObject) {
                 getBlobsExtremePoints();
             }
             if (!kgons_09_ready){
-                console.log("dl kgons..")
                 getBlobsKgons();    
                 }
             document.getElementById("index_search_div").style.display = "none";
@@ -871,13 +874,11 @@ function clickOnSearchByKgon() {
     }
     let nbPoints = Number(document.getElementById("nb_points_count").value);
     let nbKgon = Number(document.getElementById("nb_kgon_count").value);
-    
-        let res = searchByKgon(nbPoints, nbKgon);
-        for (let i of res) {
-            searchRes.push([nbPoints, Number(i)]);
-            console.log("resultaat: " + searchRes);
-        }
-    
+    let res = searchByKgon(nbPoints, nbKgon);
+    for (let i of res) {
+        searchRes.push([nbPoints, Number(i)]);
+    }
+
     document.getElementById("res_nb_extrem_points_total").innerText = "Found " + searchRes.length + " entries corresponding to the search";
     document.getElementById("res_nb_extrem_points_current").max = Number(searchRes.length);
     document.getElementById("search_result").style.display = "block";

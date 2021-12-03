@@ -392,12 +392,11 @@ function indexesNeeded(n, k, ts) {
     }
 
     indexes = indexes.slice(0, indexes.length - 1); // remove last element, the previous for adds one element after the final i.
-    console.log("idxs: " + indexes);
     return indexes;
 }
 
 /**
- * 
+ * The function identifies point sets that have at least one k-gon of size k.
  * @param {number} n ordertype or total points per pointset.
  * @param {number} k k-gon, k=3 for 3-gon.
  * @returns array with valid sets, sets that have the k-gons for value k. 
@@ -405,11 +404,10 @@ function indexesNeeded(n, k, ts) {
 function searchByKgon(n, k){
     let key = "kgons0" + n + "_b08";
     let arr = new Uint8Array(ot_data[key]);
-    console.log("full: " + arr);
     let sets = arr.length / (n - 2);
     let idxs = indexesNeeded(n, k, sets); // indexes in arr to check for a givven input of n and k.
     let res = [];
-    let setnr = 0 // to indetify the pint sets.
+    let setnr = 0 // to indetify the point sets.
     try {
         for (i in idxs) {
             if (Number(arr[idxs[i]]) > 0) { // if integer at index > 0 k-gons exist, 
@@ -420,7 +418,6 @@ function searchByKgon(n, k){
     } catch (e) {
         console.error(e);
     }
-    console.log("resu: " + res);
     return res;
 
 }
