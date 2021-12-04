@@ -186,6 +186,24 @@ function _recBinSearchOt(arr, lo, hi, nbPoints, inputLambdaMatrix) {
                 themselves with the concept of order types and explore the database provided by [Aichholtzer et al.,
                 2001], hence limiting the application to just 9 points does not impede on this goal.
             </p>
+            <h1><b>Implementation details of K-gons in the interactive demo</b></h1>
+            <p>
+                The visualisation (canvas A display option: 4) of K-gons in the <a href="demo.html">interactive demo </a>works as follows: First we query the database for pointsets that have at least one
+                k-gon of size k. Those pointsets are selected into the final search result. For every selected pointset we look at
+                all possible k-subsets, those k-subsets are verified for convexity analog to the method used in the computer proof
+                explained on the Happy Ending page. The convex k-subsets or kgons are shown together in random generated colors. 
+                Often these colors overlap and make the final image unclear to see each individual k-gons. We have chosen to show
+                all possible kgons for a search with random chosen colors. This gives graphicaly apealing results. As an extention
+                it would be possible to program the interactive demo so that the user can scroll trough a list of all calculated k-gons
+                and show them one by obe onto the screen. 
+                            
+            </p>
+            <h2>Convexity</h2>
+            <p>
+                To verify the convexity of a k-subset we verify the orientation of all triangles that triangulate a k-subset. If all trinagles
+                have the same orientation we assume that the k-subset is convex and show it as a kgon into the canvas of the interactive demo.
+                More <a href="happyending.html#triangleConvexity">details on the orientation of the triangles </a>can be found on the Happy Ending page.
+            </p>
         </div>
     </div>
 </div>

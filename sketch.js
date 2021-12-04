@@ -155,7 +155,7 @@ function grahamScan(points) {
                 extremePoints[extremePoints.length - 1],
                 orderedPoints[i]
             ) < 0
-            ) {
+        ) {
             extremePoints.pop();
         }
         extremePoints.push(orderedPoints[i]);
@@ -266,10 +266,10 @@ function drawCL(canvas) {
  * @param {Array} prefix 
  * @returns Array with posible k-subsets to be verified for convexity.
  */
-function choose(arr, k, prefix=[]) {
+function choose(arr, k, prefix = []) {
     if (k == 0) return [prefix];
     return arr.flatMap((v, i) =>
-        choose(arr.slice(i+1), k-1, [...prefix, v])
+        choose(arr.slice(i + 1), k - 1, [...prefix, v])
     );
 }
 /**
@@ -281,14 +281,14 @@ function isConvex(polygon) {
     let neg = 0;
     let pos = 0;
     for (let i = 0; i < (polygon.length - 2); i++) {
-        if(orientationDet(polygon[i], polygon[i + 1], polygon[i + 2]) < 0){
+        if (orientationDet(polygon[i], polygon[i + 1], polygon[i + 2]) < 0) {
             neg = -1;
         } else {
             pos = 1;
         }
     }
     // check last triangle
-    if(orientationDet(polygon[polygon.length - 2], polygon[polygon.length - 1], polygon[0]) < 0){
+    if (orientationDet(polygon[polygon.length - 2], polygon[polygon.length - 1], polygon[0]) < 0) {
         neg = -1;
     } else {
         pos = 1;
@@ -303,9 +303,20 @@ function isConvex(polygon) {
  * 
  * @returns Rgb color as array with 3 integers.
  */
-function generateRGB(){
+function generateRGB() {
     let rgb = [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
     return rgb;
+}
+/**
+ * The actual x and y values of point need to be altered to show up in the right place on canvas. 
+ * @param {Point} point 
+ * @param {Canvas} canvas 
+ * @returns Array with calculated x and y value.
+ */
+function calculatePointInCanvas(point, canvas) {
+    let x = (canvas.width - 2 * canvasMargin) * point.x + canvasMargin;
+    let y = (canvas.height - 2 * canvasMargin) * (1 - point.y) + canvasMargin;
+    return [x, y];
 }
 /**
  * Draw the Kgons inside the set of points after verification for convexity.
@@ -314,84 +325,88 @@ function generateRGB(){
  * @param {*} canvas 
  */
 
-function drawKG(canvas){
+function drawKG(canvas) {
     let nbKgon = Number(document.getElementById("nb_kgon_count").value);
     let nbPoints = Number(document.getElementById("nb_points_count").value);
     let pointSet = canvas.contents.points;
+    // range of indexes to generate possible k-gons with choose function.
     let range = [];
-    let colors = ["green", "blue", "yellow", "red", "gray", "white", "purple", "violet", "indigo", "gold"]
-    for(let r = 0; r < nbPoints; r++){
+    for (let r = 0; r < nbPoints; r++) {
         range.push(r);
     }
     // get all the possibel k point combinations to verify.
     let posKgons = choose(range, nbKgon);
-    // draws 3-gons since always convex, no check needed.
     switch (nbKgon) {
         case 3:
+            // draws 3-gons since always convex, no check needed.
             for (let i = 0; i < posKgons.length; i++) {
+                let p0in = pointSet[0][posKgons[i][0]];
+                let p1in = pointSet[0][posKgons[i][1]];
+                let p2in = pointSet[0][posKgons[i][2]];
+                // get a random rgb color code.
                 let color = generateRGB();
                 canvas.stroke(color[0], color[1], color[2]);
-                let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
-                let y1 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][0]].y) + canvasMargin;
-                let x2 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][1]].x + canvasMargin;
-                let y2 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][1]].y) + canvasMargin;
-                let x3 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][2]].x + canvasMargin;
-                let y3 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][2]].y) + canvasMargin;
-                canvas.line(x1, y1, x2, y2);
-                canvas.line(x2, y2, x3, y3);
-                canvas.line(x3, y3, x1, y1);
+                // calculate x and y for the specific canvas.
+                let p1 = calculatePointInCanvas(p0in, canvas);
+                let p2 = calculatePointInCanvas(p1in, canvas);
+                let p3 = calculatePointInCanvas(p2in, canvas);
+                // Draw 3 edges.  
+                canvas.line(p1[0], p1[1], p2[0], p2[1]);
+                canvas.line(p2[0], p2[1], p3[0], p3[1]);
+                canvas.line(p3[0], p3[1], p1[0], p1[1]);
             }
             break;
-            
+
         case 4:
             for (let i = 0; i < posKgons.length; i++) {
-                if (isConvex([pointSet[0][posKgons[i][0]], pointSet[0][posKgons[i][1]], 
-                    pointSet[0][posKgons[i][2]], pointSet[0][posKgons[i][3]]])) {
+                let p0in = pointSet[0][posKgons[i][0]];
+                let p1in = pointSet[0][posKgons[i][1]];
+                let p2in = pointSet[0][posKgons[i][2]];
+                let p3in = pointSet[0][posKgons[i][3]];
+                if (isConvex([p0in, p1in, p2in, p3in])) {
+                    // get a random rgb color code.
                     let color = generateRGB();
                     canvas.stroke(color[0], color[1], color[2]);
-                    let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
-                    let y1 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][0]].y) + canvasMargin;
-                    let x2 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][1]].x + canvasMargin;
-                    let y2 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][1]].y) + canvasMargin;
-                    let x3 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][2]].x + canvasMargin;
-                    let y3 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][2]].y) + canvasMargin;
-                    let x4 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][3]].x + canvasMargin;
-                    let y4 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][3]].y) + canvasMargin;
-
-                    canvas.line(x1, y1, x2, y2);
-                    canvas.line(x2, y2, x3, y3);
-                    canvas.line(x3, y3, x4, y4);
-                    canvas.line(x4, y4, x1, y1);
+                    // calculate x and y for the specific canvas.
+                    let p1 = calculatePointInCanvas(p0in, canvas);
+                    let p2 = calculatePointInCanvas(p1in, canvas);
+                    let p3 = calculatePointInCanvas(p2in, canvas);
+                    let p4 = calculatePointInCanvas(p3in, canvas);
+                    // Draw 4 edges.  
+                    canvas.line(p1[0], p1[1], p2[0], p2[1]);
+                    canvas.line(p2[0], p2[1], p3[0], p3[1]);
+                    canvas.line(p3[0], p3[1], p4[0], p4[1]);
+                    canvas.line(p4[0], p4[1], p1[0], p1[1]);
                 }
             }
             break;
         case 5:
             for (let i = 0; i < posKgons.length; i++) {
-                if (isConvex([pointSet[0][posKgons[i][0]], pointSet[0][posKgons[i][1]], 
-                    pointSet[0][posKgons[i][2]], pointSet[0][posKgons[i][3]], pointSet[0][posKgons[i][4]]])) {
-                let color = generateRGB();
-                canvas.stroke(color[0], color[1], color[2]);
-                let x1 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][0]].x + canvasMargin;
-                let y1 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][0]].y) + canvasMargin;
-                let x2 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][1]].x + canvasMargin;
-                let y2 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][1]].y) + canvasMargin;
-                let x3 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][2]].x + canvasMargin;
-                let y3 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][2]].y) + canvasMargin;
-                let x4 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][3]].x + canvasMargin;
-                let y4 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][3]].y) + canvasMargin;
-                let x5 = (canvas.width - 2 * canvasMargin) * pointSet[0][posKgons[i][4]].x + canvasMargin;
-                let y5 = (canvas.height - 2 * canvasMargin) * (1 - pointSet[0][posKgons[i][4]].y) + canvasMargin;
-                canvas.line(x1, y1, x2, y2);
-                canvas.line(x2, y2, x3, y3);
-                canvas.line(x3, y3, x4, y4);
-                canvas.line(x4, y4, x5, y5);
-                canvas.line(x5, y5, x1, y1);
+                let p0in = pointSet[0][posKgons[i][0]];
+                let p1in = pointSet[0][posKgons[i][1]];
+                let p2in = pointSet[0][posKgons[i][2]];
+                let p3in = pointSet[0][posKgons[i][3]];
+                let p4in = pointSet[0][posKgons[i][4]];
+                if (isConvex([p0in, p1in, p2in, p3in, p4in])) {
+                    // get a random rgb color code.
+                    let color = generateRGB();
+                    canvas.stroke(color[0], color[1], color[2]);
+                    // calculate x and y for the specific canvas.
+                    let p1 = calculatePointInCanvas(p0in, canvas);
+                    let p2 = calculatePointInCanvas(p1in, canvas);
+                    let p3 = calculatePointInCanvas(p2in, canvas);
+                    let p4 = calculatePointInCanvas(p3in, canvas);
+                    let p5 = calculatePointInCanvas(p4in, canvas);
+                    // Draw 4 edges.  
+                    canvas.line(p1[0], p1[1], p2[0], p2[1]);
+                    canvas.line(p2[0], p2[1], p3[0], p3[1]);
+                    canvas.line(p3[0], p3[1], p4[0], p4[1]);
+                    canvas.line(p4[0], p4[1], p5[0], p5[1]);
+                    canvas.line(p5[0], p5[1], p1[0], p1[1]);
+                }
             }
-        }
             break;
-        
     }
-    
 }
 
 /**
@@ -552,7 +567,7 @@ var sketch = function (p) {
     p.naturalClickPosition = function () {
         let x = (p.mouseX - canvasMargin) / (p.width - 2 * canvasMargin);
         let y = 1 - (p.mouseY - canvasMargin) / (p.height - 2 * canvasMargin);
-        return {x: x, y: y};
+        return { x: x, y: y };
     }
 };
 
@@ -766,9 +781,9 @@ function changeSearchType(selectedObject) {
             if (!extrem_09_ready) {
                 getBlobsExtremePoints();
             }
-            if (!kgons_09_ready){
-                getBlobsKgons();    
-                }
+            if (!kgons_09_ready) {
+                getBlobsKgons();
+            }
             document.getElementById("index_search_div").style.display = "none";
             document.getElementById("property_search_div").style.display = "block";
             break;
@@ -787,17 +802,17 @@ function changeSearchProperty(selectedObject) {
         case "nb_points_CH":
             document.getElementById("nb_points_CH_div").style.display = "block";
             document.getElementById("nb_conv_layers_div").style.display = "none";
-document.getElementById("nb_kgons_div").style.display = "none";
+            document.getElementById("nb_kgons_div").style.display = "none";
             break;
         case "nb_conv_layers":
             document.getElementById("nb_points_CH_div").style.display = "none";
             document.getElementById("nb_conv_layers_div").style.display = "block";
-document.getElementById("nb_kgons_div").style.display = "none";
+            document.getElementById("nb_kgons_div").style.display = "none";
             break;
-	case "nb_kgons":
+        case "nb_kgons":
             document.getElementById("nb_points_CH_div").style.display = "none";
             document.getElementById("nb_conv_layers_div").style.display = "none";
-	    document.getElementById("nb_kgons_div").style.display = "block";
+            document.getElementById("nb_kgons_div").style.display = "block";
             break;
     }
 }
@@ -845,7 +860,7 @@ function clickOnExtremePointsSearch() {
  */
 function clickOnSearchByNbConvLayers() {
     clearSearchResults();
-    
+
     let nbConvLayers = Number(document.getElementById("nb_conv_layers_count").value);
     for (let nbPts = 3; nbPts <= 9; nbPts++) {
         let res = searchByConvexLayers(nbPts, nbConvLayers);
@@ -956,7 +971,6 @@ function connectButtons() {
     document.getElementById("showcgA").onclick = toggleCGA;
     document.getElementById("showclA").onclick = toggleCLA;
     document.getElementById("showkgA").onclick = toggleKGA;
-
     document.getElementById("showlm").onclick = showLM;
     document.getElementById("showchB").onclick = toggleCHB;
     document.getElementById("showcgB").onclick = toggleCGB;
@@ -974,7 +988,7 @@ function connectButtons() {
     document.getElementById("res_nb_extrem_points_next").onclick = clickOnSearchNext;
     document.getElementById("res_nb_extrem_points_go").onclick = clickOnSearchGo;
     document.getElementById("propLayersSearch").onclick = clickOnSearchByNbConvLayers;
-document.getElementById("propKgonSearch").onclick = clickOnSearchByKgon;
+    document.getElementById("propKgonSearch").onclick = clickOnSearchByKgon;
 
 
 
